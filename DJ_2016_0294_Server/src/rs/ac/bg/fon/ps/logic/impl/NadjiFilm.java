@@ -23,14 +23,9 @@ public class NadjiFilm extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> filmovi = database.getAll(Film.class, "", "");
-        for (IDomain film : filmovi) {
-            Film filmic = (Film) film;
-            if (domainObject.getId().equals(filmic.getId())) {
-                domainObject = filmic;
-
-                return;
-            }
+        LinkedList<IDomain> filmovi = database.getAll(Film.class, "", "film_id = " + domainObject.getId(), "");
+        if(filmovi.isEmpty()){
+            throw new Exception();
         }
     }
 }

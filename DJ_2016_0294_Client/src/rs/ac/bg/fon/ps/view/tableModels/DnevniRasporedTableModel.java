@@ -8,7 +8,7 @@ package rs.ac.bg.fon.ps.view.tableModels;
 import java.util.Date;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 
 /**
  *
@@ -16,11 +16,11 @@ import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
  */
 public class DnevniRasporedTableModel extends AbstractTableModel {
 
-    private final List<Dnevni_Raspored> dnevniRasporedi;
+    private final List<DnevniRaspored> dnevniRasporedi;
     private String[] columnNames = new String[]{"DATUM"};
     private Class[] columnClasses = new Class[]{Date.class};
 
-    public DnevniRasporedTableModel(List<Dnevni_Raspored> dnevniRasporedi) {
+    public DnevniRasporedTableModel(List<DnevniRaspored> dnevniRasporedi) {
         this.dnevniRasporedi = dnevniRasporedi;
     }
 
@@ -36,7 +36,7 @@ public class DnevniRasporedTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Dnevni_Raspored dnevniRaspored = dnevniRasporedi.get(rowIndex);
+        DnevniRaspored dnevniRaspored = dnevniRasporedi.get(rowIndex);
 
         switch (columnIndex) {
             case 0:
@@ -52,7 +52,7 @@ public class DnevniRasporedTableModel extends AbstractTableModel {
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        Dnevni_Raspored dnevniRaspored = dnevniRasporedi.get(rowIndex);
+        DnevniRaspored dnevniRaspored = dnevniRasporedi.get(rowIndex);
 
         switch (columnIndex) {
             case 0:

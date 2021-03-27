@@ -294,14 +294,21 @@ public class PretraziSaleForm extends javax.swing.JDialog {
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     Sala sala = (Sala) tableModel.getValueAtRow(row);
-                    selectedSala = sala;
-                    salaInfoPanel.setVisible(true);
-                    nazivInfo.setText(sala.getNaziv());
-                    brojMesta.setText(sala.getBroj_mesta() + "");
-                    vipMesta.setText(sala.isVip_mesta() + "");
-                    klima.setText(sala.isKlima() + "");
-                    has3D.setText(sala.isHas3D() + "");
-                    JOptionPane.showMessageDialog(null, "Sistem je ucitao salu", "Uspesno ucitavanje sale", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        Sala sala2;
+                        sala2 = (Sala) ControllerC.getInstance().nadjiSalu(sala).getResponse();
+                        selectedSala = sala2;
+                        salaInfoPanel.setVisible(true);
+                        nazivInfo.setText(sala2.getNaziv());
+                        brojMesta.setText(sala2.getBroj_mesta() + "");
+                        vipMesta.setText(sala2.isVip_mesta() + "");
+                        klima.setText(sala2.isKlima() + "");
+                        has3D.setText(sala2.isHas3D() + "");
+                        JOptionPane.showMessageDialog(null, "Sistem je ucitao salu", "Uspesno ucitavanje sale", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Sistem ne moze da ucita salu", "Neuspesno ucitavanje sale", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
             }
         });

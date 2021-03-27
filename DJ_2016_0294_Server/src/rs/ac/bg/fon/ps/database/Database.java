@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Properties;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Korisnik;
@@ -77,7 +77,7 @@ public class Database {
         }
     }
 
-    public LinkedList<IDomain> getAll(Class klasa, String where, String orderBy) throws Exception {
+    public LinkedList<IDomain> getAll(Class klasa, String join, String where, String orderBy) throws Exception {
 
         Statement statement = connection.createStatement();
         IDomain domain;
@@ -90,8 +90,8 @@ public class Database {
             domain = new Sala();
         } else if (klasa == Projekcija.class) {
             domain = new Projekcija();
-        } else if (klasa == Dnevni_Raspored.class) {
-            domain = new Dnevni_Raspored();
+        } else if (klasa == DnevniRaspored.class) {
+            domain = new DnevniRaspored();
         } else if (klasa == P_DR.class) {
             domain = new P_DR();
         } else {
@@ -99,14 +99,20 @@ public class Database {
         }
 
         String query = domain.prepareQueryForSelect();
+        
+        if (!join.equals("")) {
+            query += " JOIN " + join;
+        }
 
         if (!where.equals("")) {
-            query += " where " + where;
+            query += " WHERE " + where;
         }
 
         if (!orderBy.equals("")) {
-            query += " order by " + orderBy;
+            query += " ORDER BY " + orderBy;
         }
+        
+        System.out.println(query);
 
         ResultSet rs = statement.executeQuery(query);
 

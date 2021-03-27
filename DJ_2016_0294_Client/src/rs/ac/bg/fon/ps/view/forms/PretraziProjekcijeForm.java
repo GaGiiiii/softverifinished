@@ -329,20 +329,27 @@ public class PretraziProjekcijeForm extends javax.swing.JDialog {
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     Projekcija projekcija = (Projekcija) tableModel.getValueAtRow(row);
-                    selectedProjekcija = projekcija;
-                    projekcijaInfoPanel.setVisible(true);
+                    try {
+                        Projekcija projekcija2;
+                        projekcija2 = (Projekcija) ControllerC.getInstance().nadjiProjekciju(projekcija).getResponse();
+                        selectedProjekcija = projekcija2;
+                        projekcijaInfoPanel.setVisible(true);
 
-                    Date vreme = projekcija.getVreme();
-                    Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
-                    calendar.setTime(vreme);   // assigns calendar to given date 
+                        Date vreme = projekcija2.getVreme();
+                        Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
+                        calendar.setTime(vreme);   // assigns calendar to given date 
 //                  https://stackoverflow.com/questions/11599947/calendar-minute-giving-minutes-without-leading-zero/11600070
-                    vremeTxt.setText(String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+                        vremeTxt.setText(String.format("%02d:%02d", calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
 
-                    populateFilmCb();
-                    populateSalaCb();
-                    filmCb.setSelectedItem(projekcija.getFilm());
-                    salaCb.setSelectedItem(projekcija.getSala());
-                    JOptionPane.showMessageDialog(null, "Sistem je ucitao projekciju", "Uspesno ucitavanje projekcije", JOptionPane.INFORMATION_MESSAGE);
+                        populateFilmCb();
+                        populateSalaCb();
+                        filmCb.setSelectedItem(projekcija2.getFilm());
+                        salaCb.setSelectedItem(projekcija2.getSala());
+                        JOptionPane.showMessageDialog(null, "Sistem je ucitao projekciju", "Uspesno ucitavanje projekcije", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Sistem ne moze da ucita projekciju", "Neuspesno ucitavanje projekcije", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
             }
 

@@ -23,14 +23,9 @@ public class NadjiSalu extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> sale = database.getAll(Sala.class, "", "");
-        for (IDomain sala : sale) {
-            Sala salica = (Sala) sala;
-            if (domainObject.getId().equals(salica.getId())) {
-                domainObject = salica;
-
-                return;
-            }
+        LinkedList<IDomain> sale = database.getAll(Sala.class, "", "sala_id = " + domainObject.getId(), "");
+        if (sale.isEmpty()) {
+            throw new Exception();
         }
     }
 }

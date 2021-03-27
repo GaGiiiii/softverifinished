@@ -26,18 +26,8 @@ public class PretraziSale extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> sale = database.getAll(Sala.class, "", "");
-        LinkedList<IDomain> saleGood = new LinkedList<>();
-
-        for (IDomain sala : sale) {
-            Sala salica = (Sala) sala;
-
-            if (salica.getNaziv().toLowerCase().contains(kriterijum.toLowerCase())) {
-                saleGood.add(salica);
-            }
-        }
-
-        list = saleGood;
+        LinkedList<IDomain> sale = database.getAll(Sala.class, "", "naziv LIKE '%" + kriterijum + "%'", "");
+        list = sale;
     }
 
 }

@@ -17,12 +17,12 @@ public class P_DR implements IDomain, Serializable {
 
     private Long p_dr_id;
     private Projekcija projekcija;
-    private Dnevni_Raspored dnevniRaspored;
+    private DnevniRaspored dnevniRaspored;
 
     public P_DR() {
     }
 
-    public P_DR(Long p_dr_id, Projekcija projekcija, Dnevni_Raspored dnevniRaspored) {
+    public P_DR(Long p_dr_id, Projekcija projekcija, DnevniRaspored dnevniRaspored) {
         this.p_dr_id = p_dr_id;
         this.projekcija = projekcija;
         this.dnevniRaspored = dnevniRaspored;
@@ -44,11 +44,11 @@ public class P_DR implements IDomain, Serializable {
         this.projekcija = projekcija;
     }
 
-    public Dnevni_Raspored getDnevniRaspored() {
+    public DnevniRaspored getDnevniRaspored() {
         return dnevniRaspored;
     }
 
-    public void setDnevniRaspored(Dnevni_Raspored dnevniRaspored) {
+    public void setDnevniRaspored(DnevniRaspored dnevniRaspored) {
         this.dnevniRaspored = dnevniRaspored;
     }
 
@@ -96,7 +96,7 @@ public class P_DR implements IDomain, Serializable {
             Projekcija projekcija = new Projekcija();
             projekcija.setProjekcija_id(rs.getLong("projekcija_id"));
 
-            Dnevni_Raspored dnevniRaspored = new Dnevni_Raspored();
+            DnevniRaspored dnevniRaspored = new DnevniRaspored();
             dnevniRaspored.setDnevni_raspored_id(rs.getLong("dnevni_raspored_id"));
 
             P_DR pdr = new P_DR(id, projekcija, dnevniRaspored);
@@ -113,7 +113,7 @@ public class P_DR implements IDomain, Serializable {
 
     @Override
     public String prepareQueryForSelect() {
-        return "SELECT * FROM `P_DR`";
+        return "SELECT * FROM `P_DR` pdr";
     }
 
 }

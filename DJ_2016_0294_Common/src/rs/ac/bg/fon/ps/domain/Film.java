@@ -177,7 +177,7 @@ public class Film implements IDomain, Serializable {
 
     @Override
     public String prepareQueryForSelect() {
-        return "SELECT * FROM `film`";
+        return "SELECT * FROM `film` film";
     }
 
     @Override

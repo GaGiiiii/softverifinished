@@ -107,10 +107,10 @@ public class Projekcija implements IDomain, Serializable {
         while (rs.next()) {
             Long id = rs.getLong("projekcija_id");
             Date vreme = new java.util.Date(rs.getTimestamp("vreme").getTime());
-            Film film = new Film();
-            film.setFilm_id(rs.getLong("film_id"));
-            Sala sala = new Sala();
-            sala.setSala_id(rs.getLong("sala_id"));
+            Film film = new Film(rs.getLong("film_id"), rs.getString("f.naziv"), rs.getString("f.zanr"),
+                    rs.getInt("f.trajanje"), rs.getDouble("f.cena_karte"), rs.getString("f.reziser"), rs.getString("f.glumci"), new java.util.Date(rs.getDate("f.datum_izlaska").getTime()), rs.getString("f.opis"));
+            Sala sala = new Sala(rs.getLong("sala_id"), rs.getString("s.naziv"), rs.getInt("s.broj_mesta"), 
+                    rs.getBoolean("s.vip_mesta"), rs.getBoolean("s.klima"), rs.getBoolean("s.has3D"));
 
             Projekcija projekcija = new Projekcija(id, vreme, film, sala);
             list.add(projekcija);
@@ -129,7 +129,7 @@ public class Projekcija implements IDomain, Serializable {
 
     @Override
     public String prepareQueryForSelect() {
-        return "SELECT * FROM `projekcija`";
+        return "SELECT * FROM `projekcija` projekcija";
     }
 
     @Override

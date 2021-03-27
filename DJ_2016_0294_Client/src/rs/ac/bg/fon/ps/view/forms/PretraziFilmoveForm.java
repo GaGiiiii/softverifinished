@@ -325,7 +325,7 @@ public class PretraziFilmoveForm extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise film", "Neuspesno brisanje filma", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this,"Sistem ne moze da obrise film", "Greska prilikom brisanja filma", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise film", "Greska prilikom brisanja filma", JOptionPane.ERROR_MESSAGE);
                 ex.printStackTrace();
             }
         }
@@ -382,17 +382,24 @@ public class PretraziFilmoveForm extends javax.swing.JDialog {
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
                     obrisiBtn.setEnabled(true);
                     Film film = (Film) tableModel.getValueAtRow(row);
-                    selectedFilm = film;
-                    movieInfoPanel.setVisible(true);
-                    nazivInfo.setText(film.getNaziv());
-                    zanrInfo.setText(film.getZanr());
-                    trajanjeInfo.setText(film.getTrajanje() + " min");
-                    cenaInfo.setText(film.getCena_karte() + " RSD");
-                    reziserInfo.setText(film.getReziser());
-                    glumciInfo.setText(film.getGlumci());
-                    datumInfo.setText(film.getDatum_izlaska() + "");
-                    opisInfo.setText(film.getOpis());
-                    JOptionPane.showMessageDialog(null, "Sistem je ucitao film", "Uspesno ucitavanje filma", JOptionPane.INFORMATION_MESSAGE);
+                    try {
+                        Film film2;
+                        film2 = (Film) ControllerC.getInstance().nadjiFilm(film).getResponse();
+                        selectedFilm = film2;
+                        movieInfoPanel.setVisible(true);
+                        nazivInfo.setText(film2.getNaziv());
+                        zanrInfo.setText(film2.getZanr());
+                        trajanjeInfo.setText(film2.getTrajanje() + " min");
+                        cenaInfo.setText(film2.getCena_karte() + " RSD");
+                        reziserInfo.setText(film2.getReziser());
+                        glumciInfo.setText(film2.getGlumci());
+                        datumInfo.setText(film2.getDatum_izlaska() + "");
+                        opisInfo.setText(film2.getOpis());
+                        JOptionPane.showMessageDialog(null, "Sistem je ucitao film", "Uspesno ucitavanje filma", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Sistem ne moze da ucita film", "Neuspesno ucitavanje filma", JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
             }
         });

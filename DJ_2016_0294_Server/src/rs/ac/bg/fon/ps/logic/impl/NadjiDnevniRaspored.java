@@ -6,7 +6,7 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
@@ -16,25 +16,16 @@ import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
  */
 public class NadjiDnevniRaspored extends SistemskeOperacije {
 
-    public NadjiDnevniRaspored(Dnevni_Raspored dnevniRaspored) {
+    public NadjiDnevniRaspored(DnevniRaspored dnevniRaspored) {
         super();
         domainObject = dnevniRaspored;
     }
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> dnevniRasporedi = new LinkedList<>();
-        UcitajListuDnevnihRasporeda ulp = new UcitajListuDnevnihRasporeda(dnevniRasporedi);
-        ulp.execute();
-        dnevniRasporedi = ulp.getList();
-
-        for (IDomain dnevniRaspored : dnevniRasporedi) {
-            Dnevni_Raspored drr = (Dnevni_Raspored) dnevniRaspored;
-            if (domainObject.getId().equals(drr.getId())) {
-                domainObject = drr;
-
-                return;
-            }
+        LinkedList<IDomain> rasporedi = database.getAll(DnevniRaspored.class, "", "dnevni_raspored_id = " + domainObject.getId(), "");
+        if (rasporedi.isEmpty()) {
+            throw new Exception();
         }
     }
 }

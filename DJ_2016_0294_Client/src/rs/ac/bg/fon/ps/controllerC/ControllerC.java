@@ -5,12 +5,13 @@
  */
 package rs.ac.bg.fon.ps.controllerC;
 
+import java.util.Date;
 import java.util.LinkedList;
 import rs.ac.bg.fon.ps.communication.CommunicationWithServer;
 import rs.ac.bg.fon.ps.communication.Operation;
 import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.P_DR;
@@ -44,11 +45,11 @@ public class ControllerC {
 //        return so.getList();
 //    }
 //
-    public Response kreirajFilm(Film film) throws Exception {
+    public Response zapamtiFilm(Film film) throws Exception {
         Request req = new Request();
         Response res = new Response();
 
-        req.setOperation(Operation.KREIRAJ_FILM);
+        req.setOperation(Operation.ZAPAMTI_FILM);
         req.setParameter(film);
 
         CommunicationWithServer.getInstance().sendRequest(req);
@@ -56,10 +57,10 @@ public class ControllerC {
         return res = CommunicationWithServer.getInstance().getResponse();
     }
 
-    public Response kreirajSalu(Sala sala) throws Exception {
+    public Response zapamtiSalu(Sala sala) throws Exception {
         Request req = new Request();
         Response res = new Response();
-        req.setOperation(Operation.KREIRAJ_SALU);
+        req.setOperation(Operation.ZAPAMTI_SALU);
         req.setParameter(sala);
 
         CommunicationWithServer.getInstance().sendRequest(req);
@@ -87,10 +88,10 @@ public class ControllerC {
         return sale = (LinkedList<Sala>) res.getResponse();
     }
 
-    public Response kreirajProjekciju(Projekcija projekcija) throws Exception {
+    public Response zapamtiProjekciju(Projekcija projekcija) throws Exception {
         Request req = new Request();
         Response res = new Response();
-        req.setOperation(Operation.KREIRAJ_PROJEKCIJU);
+        req.setOperation(Operation.ZAPAMTI_PROJEKCIJU);
         req.setParameter(projekcija);
 
         CommunicationWithServer.getInstance().sendRequest(req);
@@ -162,9 +163,9 @@ public class ControllerC {
         return res = CommunicationWithServer.getInstance().getResponse();
     }
 
-    public Response kreirajDnevniRaspored(KreirajDnevniRasporedHelp kdrh) throws Exception {
+    public Response zapamtiDnevniRaspored(KreirajDnevniRasporedHelp kdrh) throws Exception {
         Request req = new Request();
-        req.setOperation(Operation.KREIRAJ_DNEVNI_RASPORED_SA_PROJEKCIJAMA);
+        req.setOperation(Operation.ZAPAMTI_DNEVNI_RASPORED);
         req.setParameter(kdrh);
 
         CommunicationWithServer.getInstance().sendRequest(req);
@@ -173,14 +174,14 @@ public class ControllerC {
         return res = CommunicationWithServer.getInstance().getResponse();
     }
 
-    public LinkedList<Dnevni_Raspored> ucitajListuDnevnihRasporeda(LinkedList<Dnevni_Raspored> dnevniRasporedi) throws Exception {
+    public LinkedList<DnevniRaspored> ucitajListuDnevnihRasporeda(LinkedList<DnevniRaspored> dnevniRasporedi) throws Exception {
         Request req = new Request();
         req.setOperation(Operation.UCITAJ_LISTU_DNEVNIH_RASPOREDA);
 
         CommunicationWithServer.getInstance().sendRequest(req);
         Response res = CommunicationWithServer.getInstance().getResponse();
 
-        return dnevniRasporedi = (LinkedList<Dnevni_Raspored>) res.getResponse();
+        return dnevniRasporedi = (LinkedList<DnevniRaspored>) res.getResponse();
     }
 
     public LinkedList<P_DR> ucitajListuPDR(LinkedList<P_DR> pdrs) throws Exception {
@@ -201,6 +202,61 @@ public class ControllerC {
 
         CommunicationWithServer.getInstance().sendRequest(req);
         Response res = new Response();
+
+        return res = CommunicationWithServer.getInstance().getResponse();
+    }
+
+    public Response nadjiFilm(Film film) throws Exception {
+        Request req = new Request();
+        req.setOperation(Operation.NADJI_FILM);
+        req.setParameter(film);
+
+        CommunicationWithServer.getInstance().sendRequest(req);
+        Response res = new Response();
+
+        return res = CommunicationWithServer.getInstance().getResponse();
+    }
+
+    public Response nadjiSalu(Sala sala) throws Exception {
+        Request req = new Request();
+        req.setOperation(Operation.NADJI_SALU);
+        req.setParameter(sala);
+
+        CommunicationWithServer.getInstance().sendRequest(req);
+        Response res = new Response();
+
+        return res = CommunicationWithServer.getInstance().getResponse();
+    }
+
+    public Response nadjiProjekciju(Projekcija projekcija) throws Exception {
+        Request req = new Request();
+        req.setOperation(Operation.NADJI_PROJEKCIJU);
+        req.setParameter(projekcija);
+
+        CommunicationWithServer.getInstance().sendRequest(req);
+        Response res = new Response();
+
+        return res = CommunicationWithServer.getInstance().getResponse();
+    }
+
+    public Response nadjiDnevniRaspored(DnevniRaspored dnevniRaspored) throws Exception {
+        Request req = new Request();
+        req.setOperation(Operation.NADJI_DNEVNI_RASPORED);
+        req.setParameter(dnevniRaspored);
+
+        CommunicationWithServer.getInstance().sendRequest(req);
+        Response res = new Response();
+
+        return res = CommunicationWithServer.getInstance().getResponse();
+    }
+
+    public Response pretraziDnevneRasporede(String kriterijum, LinkedList<IDomain> list) throws Exception {
+        Request req = new Request();
+        Response res = new Response();
+        req.setOperation(Operation.PRETRAZI_DNEVNE_RASPOREDE);
+        req.setParameter(new PretragaHelp(kriterijum, list));
+
+        CommunicationWithServer.getInstance().sendRequest(req);
 
         return res = CommunicationWithServer.getInstance().getResponse();
     }

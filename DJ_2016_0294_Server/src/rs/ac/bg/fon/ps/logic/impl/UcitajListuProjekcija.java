@@ -6,10 +6,8 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Projekcija;
-import rs.ac.bg.fon.ps.domain.Sala;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
 /**
@@ -25,18 +23,7 @@ public class UcitajListuProjekcija extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, "", "");
-        for (IDomain projekcija : projekcije) {
-            Projekcija projekcija2 = (Projekcija) projekcija;
-            NadjiFilm nf = new NadjiFilm(projekcija2.getFilm());
-            nf.execute();
-            projekcija2.setFilm((Film) nf.getDomainObject());
-
-            NadjiSalu ns = new NadjiSalu(projekcija2.getSala());
-            ns.execute();
-            projekcija2.setSala((Sala) ns.getDomainObject());
-        }
-
+        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, "film f ON projekcija.film_id = f.film_id JOIN sala s ON projekcija.sala_id = s.sala_id", "", "");
         list = projekcije;
     }
 }

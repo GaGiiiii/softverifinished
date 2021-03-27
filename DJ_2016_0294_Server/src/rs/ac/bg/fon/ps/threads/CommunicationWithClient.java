@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import rs.ac.bg.fon.ps.communication.Request;
 import rs.ac.bg.fon.ps.communication.Response;
 import rs.ac.bg.fon.ps.controller.Controller;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.Film;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.Korisnik;
@@ -52,11 +53,11 @@ public class CommunicationWithClient extends Thread {
                     case LOGIN:
                         res = login(req, res);
                         break;
-                    case KREIRAJ_FILM:
-                        res = kreirajFilm(req, res);
+                    case ZAPAMTI_FILM:
+                        res = zapamtiFilm(req, res);
                         break;
-                    case KREIRAJ_SALU:
-                        res = kreirajSalu(req, res);
+                    case ZAPAMTI_SALU:
+                        res = zapamtiSalu(req, res);
                         break;
                     case UCITAJ_LISTU_FILMOVA:
                         res = ucitajListuFilmova(req, res);
@@ -64,8 +65,8 @@ public class CommunicationWithClient extends Thread {
                     case UCITAJ_LISTU_SALA:
                         res = ucitajListuSala(req, res);
                         break;
-                    case KREIRAJ_PROJEKCIJU:
-                        res = kreirajProjekciju(req, res);
+                    case ZAPAMTI_PROJEKCIJU:
+                        res = zapamtiProjekciju(req, res);
                         break;
                     case PRETRAZI_FILMOVE:
                         res = pretraziFilmove(req, res);
@@ -85,8 +86,8 @@ public class CommunicationWithClient extends Thread {
                     case IZMENI_PROJEKCIJU:
                         res = izmeniProjekciju(req, res);
                         break;
-                    case KREIRAJ_DNEVNI_RASPORED_SA_PROJEKCIJAMA:
-                        res = kreirajDnevniRaspored(req, res);
+                    case ZAPAMTI_DNEVNI_RASPORED:
+                        res = zapamtiDnevniRaspored(req, res);
                         break;
                     case UCITAJ_LISTU_DNEVNIH_RASPOREDA:
                         res = ucitajListuDnevnihRasporeda(req, res);
@@ -96,6 +97,21 @@ public class CommunicationWithClient extends Thread {
                         break;
                     case IZMENI_DNEVNI_RASPORED:
                         res = izmeniDnevniRaspored(req, res);
+                        break;
+                    case NADJI_FILM:
+                        res = nadjiFilm(req, res);
+                        break;
+                    case NADJI_SALU:
+                        res = nadjiSalu(req, res);
+                        break;
+                    case NADJI_PROJEKCIJU:
+                        res = nadjiProjekciju(req, res);
+                        break;
+                    case NADJI_DNEVNI_RASPORED:
+                        res = nadjiDnevniRasproed(req, res);
+                        break;
+                    case PRETRAZI_DNEVNE_RASPOREDE:
+                        res = pretraziDnevneRasporede(req, res);
                         break;
                 }
                 sendResponse(res);
@@ -166,10 +182,10 @@ public class CommunicationWithClient extends Thread {
         return res;
     }
 
-    private Response kreirajFilm(Request req, Response res) {
+    private Response zapamtiFilm(Request req, Response res) {
         try {
             Film film = (Film) req.getParameter();
-            IDomain domainObject = Controller.getInstance().kreirajFilm(film);
+            IDomain domainObject = Controller.getInstance().zapamtiFilm(film);
 
             res.setREsponse(domainObject);
         } catch (Exception e) {
@@ -179,10 +195,10 @@ public class CommunicationWithClient extends Thread {
         return res;
     }
 
-    private Response kreirajSalu(Request req, Response res) {
+    private Response zapamtiSalu(Request req, Response res) {
         try {
             Sala sala = (Sala) req.getParameter();
-            IDomain domainObject = Controller.getInstance().kreirajSalu(sala);
+            IDomain domainObject = Controller.getInstance().zapamtiSalu(sala);
 
             res.setREsponse(domainObject);
         } catch (Exception e) {
@@ -218,10 +234,10 @@ public class CommunicationWithClient extends Thread {
         return res;
     }
 
-    private Response kreirajProjekciju(Request req, Response res) {
+    private Response zapamtiProjekciju(Request req, Response res) {
         try {
             Projekcija projekcija = (Projekcija) req.getParameter();
-            IDomain domainObject = Controller.getInstance().kreirajProjekciju(projekcija);
+            IDomain domainObject = Controller.getInstance().zapamtiProjekciju(projekcija);
 
             res.setREsponse(domainObject);
         } catch (Exception e) {
@@ -313,10 +329,10 @@ public class CommunicationWithClient extends Thread {
         return res;
     }
 
-    private Response kreirajDnevniRaspored(Request req, Response res) {
+    private Response zapamtiDnevniRaspored(Request req, Response res) {
         try {
             KreirajDnevniRasporedHelp kdrh = (KreirajDnevniRasporedHelp) req.getParameter();
-            IDomain domainObject = Controller.getInstance().kreirajDnevniRaspored(kdrh);
+            IDomain domainObject = Controller.getInstance().zapamtiDnevniRaspored(kdrh);
 
             res.setREsponse(domainObject);
         } catch (Exception e) {
@@ -360,6 +376,72 @@ public class CommunicationWithClient extends Thread {
             res.setREsponse(domainObject);
         } catch (Exception e) {
             res.setException(e);
+        }
+
+        return res;
+    }
+
+    private Response nadjiFilm(Request req, Response res) {
+        try {
+            Film film = (Film) req.getParameter();
+            Film nadjen = (Film) Controller.getInstance().nadjiFIlm(film);
+            res.setREsponse(nadjen);
+        } catch (Exception ex) {
+            Logger.getLogger(CommunicationWithClient.class.getName()).log(Level.SEVERE, null, ex);
+            res.setException(ex);
+        }
+
+        return res;
+    }
+
+    private Response nadjiSalu(Request req, Response res) {
+        try {
+            Sala sala = (Sala) req.getParameter();
+            Sala nadjen = (Sala) Controller.getInstance().nadjiSalu(sala);
+            res.setREsponse(nadjen);
+        } catch (Exception ex) {
+            Logger.getLogger(CommunicationWithClient.class.getName()).log(Level.SEVERE, null, ex);
+            res.setException(ex);
+        }
+
+        return res;
+    }
+
+    private Response nadjiProjekciju(Request req, Response res) {
+        try {
+            Projekcija projekcija = (Projekcija) req.getParameter();
+            Projekcija nadjen = (Projekcija) Controller.getInstance().nadjiProjekciju(projekcija);
+            res.setREsponse(nadjen);
+        } catch (Exception ex) {
+            Logger.getLogger(CommunicationWithClient.class.getName()).log(Level.SEVERE, null, ex);
+            res.setException(ex);
+        }
+
+        return res;
+    }
+
+    private Response nadjiDnevniRasproed(Request req, Response res) {
+        try {
+            DnevniRaspored dnevniRaspored = (DnevniRaspored) req.getParameter();
+            DnevniRaspored nadjen = (DnevniRaspored) Controller.getInstance().nadjiDnevniRaspored(dnevniRaspored);
+            res.setREsponse(nadjen);
+        } catch (Exception ex) {
+            Logger.getLogger(CommunicationWithClient.class.getName()).log(Level.SEVERE, null, ex);
+            res.setException(ex);
+        }
+
+        return res;
+    }
+
+    private Response pretraziDnevneRasporede(Request req, Response res) {
+        try {
+            LinkedList<IDomain> rasporedi = null;
+            PretragaHelp ph = (PretragaHelp) req.getParameter();
+            rasporedi = Controller.getInstance().pretraziDnevneRasporede(ph.getKriterijum(), ph.getList());
+            res.setREsponse(rasporedi);
+        } catch (Exception ex) {
+            Logger.getLogger(CommunicationWithClient.class.getName()).log(Level.SEVERE, null, ex);
+            res.setException(ex);
         }
 
         return res;

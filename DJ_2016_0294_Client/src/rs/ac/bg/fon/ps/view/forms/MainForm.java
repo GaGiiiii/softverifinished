@@ -161,7 +161,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_PretraziProjekcijeActionPerformed
 
     private void kreirajFilmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kreirajFilmActionPerformed
-        KreirajFilmForm kff = new KreirajFilmForm(this, true);
+        ZapamtiFilmForm kff = new ZapamtiFilmForm(this, true);
         kff.setVisible(true);
     }//GEN-LAST:event_kreirajFilmActionPerformed
 
@@ -170,12 +170,12 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_exitItemActionPerformed
 
     private void kreirajSaluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kreirajSaluActionPerformed
-        KreirajSaluForm ksf = new KreirajSaluForm(this, true);
+        ZapamtiSaluForm ksf = new ZapamtiSaluForm(this, true);
         ksf.setVisible(true);
     }//GEN-LAST:event_kreirajSaluActionPerformed
 
     private void kreirajProjekcijuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kreirajProjekcijuActionPerformed
-        KreirajProjekcijuForm kpf = new KreirajProjekcijuForm(this, true);
+        ZapamtiProjekcijuForm kpf = new ZapamtiProjekcijuForm(this, true);
         kpf.setVisible(true);
     }//GEN-LAST:event_kreirajProjekcijuActionPerformed
 
@@ -190,7 +190,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_PretraziSaleActionPerformed
 
     private void kreirajDnevniRasporedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kreirajDnevniRasporedActionPerformed
-        KreirajDnevniRasporedForm kdrf = new KreirajDnevniRasporedForm(this, true);
+        ZapamtiDnevniRasporedForm kdrf = new ZapamtiDnevniRasporedForm(this, true);
         kdrf.setVisible(true);
     }//GEN-LAST:event_kreirajDnevniRasporedActionPerformed
 

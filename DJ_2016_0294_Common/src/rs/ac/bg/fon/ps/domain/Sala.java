@@ -143,7 +143,7 @@ public class Sala implements IDomain, Serializable {
 
     @Override
     public String prepareQueryForSelect() {
-        return "SELECT * FROM `sala`";
+        return "SELECT * FROM `sala` sala";
     }
 
     @Override

@@ -100,7 +100,7 @@ public class Korisnik implements Serializable, IDomain {
 
     @Override
     public String prepareQueryForSelect() {
-        return "SELECT * FROM `korisnik`";
+        return "SELECT * FROM `korisnik` korisnik";
     }
 
     @Override

@@ -6,7 +6,7 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.logic.SistemskeOperacije;
 
@@ -23,7 +23,7 @@ public class UcitajListuDnevnihRasporeda extends SistemskeOperacije{
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> rasporedi = database.getAll(Dnevni_Raspored.class, "", "datum ASC");
+        LinkedList<IDomain> rasporedi = database.getAll(DnevniRaspored.class, "", "", "datum ASC");
         list = rasporedi;
     }
 }

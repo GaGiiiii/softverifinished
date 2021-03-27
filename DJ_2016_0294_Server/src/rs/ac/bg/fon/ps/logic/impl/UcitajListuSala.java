@@ -23,7 +23,7 @@ public class UcitajListuSala extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> sale = database.getAll(Sala.class, "", "");
+        LinkedList<IDomain> sale = database.getAll(Sala.class, "", "", "");
         list = sale;
         System.out.println(list);
     }

@@ -26,18 +26,8 @@ public class PretraziFilmove extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> filmovi = database.getAll(Film.class, "", "");
-        LinkedList<IDomain> filmoviGood = new LinkedList<>();
-
-        for (IDomain film : filmovi) {
-            Film filmic = (Film) film;
-
-            if (filmic.getNaziv().toLowerCase().contains(kriterijum.toLowerCase())) {
-                filmoviGood.add(filmic);
-            }
-        }
-
-        list = filmoviGood;
+        LinkedList<IDomain> filmovi = database.getAll(Film.class, "", "naziv LIKE '%" + kriterijum + "%'", "");
+        list = filmovi;
     }
 
 }

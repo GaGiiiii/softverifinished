@@ -13,13 +13,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import rs.ac.bg.fon.ps.communication.Response;
 import rs.ac.bg.fon.ps.controllerC.ControllerC;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
+import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.P_DR;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 import rs.ac.bg.fon.ps.helpClasses.KreirajDnevniRasporedHelp;
@@ -34,13 +36,14 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
 
     private ProjekcijaTableModel projekcijeTableModel;
     private DnevniRasporedTableModel dnevniRasporedTableModel;
-    private Dnevni_Raspored selectedDnevniRaspored;
+    private DnevniRaspored selectedDnevniRaspored;
+    private DnevniRasporedTableModel tableModel;
 
     public IzmeniDnevniRasporedForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(parent);
-        setTitle("Kreiranje filma");
+        setTitle("Izmena dnevnog rasporeda");
         init();
     }
 
@@ -64,6 +67,8 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         izmeniBtn = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
+        pretraga = new javax.swing.JTextField();
+        pretragaBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -84,7 +89,7 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
         jScrollPane2.setViewportView(dnevniRasporedTable);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel10.setText("Izaberite dnevni raspored");
+        jLabel10.setText("Unesite datum (dd-mm-yyyy)");
 
         izmenaPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Izmena rasporeda", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
 
@@ -148,19 +153,31 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        pretragaBtn.setText("PRETRAZI");
+        pretragaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pretragaBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(241, Short.MAX_VALUE)
+                .addContainerGap(277, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(156, 156, 156))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 759, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pretraga, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pretragaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(izmenaPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -169,13 +186,16 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel10)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(pretraga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pretragaBtn)
+                    .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(izmenaPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
@@ -190,7 +210,7 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
             } catch (ParseException pe) {
                 JOptionPane.showMessageDialog(this, "Pogresan format datuma", "Greska prilikom izmene dnevnog rasporeda", JOptionPane.ERROR_MESSAGE);
 
-                return;
+                throw new Exception();
             }
 
             int[] selectedRows = projekcijeTable.getSelectedRows();
@@ -199,7 +219,7 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
             if (selectedRows.length == 0) {
                 JOptionPane.showMessageDialog(this, "Niste izabrali projekcije", "Greska prilikom izmene dnevnog rasporeda", JOptionPane.ERROR_MESSAGE);
 
-                return;
+                throw new Exception();
             } else {
                 for (int i = 0; i < selectedRows.length; i++) {
                     Projekcija projekcija = (Projekcija) projekcijeTableModel.getValueAtRow(selectedRows[i]);
@@ -228,6 +248,30 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
 
     }//GEN-LAST:event_izmeniBtnActionPerformed
 
+    private void pretragaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pretragaBtnActionPerformed
+        try {
+            LinkedList<IDomain> dnevniRasporedi = new LinkedList<>();
+            Response res = ControllerC.getInstance().pretraziDnevneRasporede(pretraga.getText(), dnevniRasporedi);
+
+            if (res.getException() == null) {
+                List<DnevniRaspored> list1 = (List<DnevniRaspored>) res.getResponse();
+                if (list1.size() == 0) {
+                    JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje rasporede po zadatoj vrednosti", "Neuspesno pretrazivanje rasporeda", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    tableModel = new DnevniRasporedTableModel((List<DnevniRaspored>) res.getResponse());
+                    dnevniRasporedTable.setModel(tableModel);
+                    JOptionPane.showMessageDialog(this, "Sistem je pronasao rasporede po zadatoj vrednosti", "Uspesno pretrazivanje rasporeda", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje rasporede po zadatoj vrednosti", "Neuspesno pretrazivanje rasporeda", JOptionPane.ERROR_MESSAGE);
+                res.getException().printStackTrace();
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Sistem ne moze da nadje rasporede po zadatoj vrednosti", "Greska prilikom pretrazivanja", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_pretragaBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField datum;
@@ -240,6 +284,8 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField pretraga;
+    private javax.swing.JButton pretragaBtn;
     private javax.swing.JTable projekcijeTable;
     // End of variables declaration//GEN-END:variables
 
@@ -258,21 +304,27 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
                 Point point = mouseEvent.getPoint();
                 int row = table.rowAtPoint(point);
                 if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
-                    Dnevni_Raspored dnevniRaspored = (Dnevni_Raspored) dnevniRasporedTableModel.getValueAtRow(row);
-                    selectedDnevniRaspored = dnevniRaspored;
-                    izmenaPanel.setVisible(true);
-                    populateProjekcijeTable();
+                    DnevniRaspored dnevniRaspored = (DnevniRaspored) dnevniRasporedTableModel.getValueAtRow(row);
+                    try {
+                        DnevniRaspored dnevniRaspored2;
+                        dnevniRaspored2 = (DnevniRaspored) ControllerC.getInstance().nadjiDnevniRaspored(dnevniRaspored).getResponse();
+                        selectedDnevniRaspored = dnevniRaspored;
+                        izmenaPanel.setVisible(true);
+                        populateProjekcijeTable();
 
-                    Date date = dnevniRaspored.getDatum();
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(date);
+                        Date date = dnevniRaspored.getDatum();
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.setTime(date);
 
-                    int day = calendar.get(Calendar.DAY_OF_MONTH);
-                    int month = calendar.get(Calendar.MONTH);
-                    int year = calendar.get(Calendar.YEAR);
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        int month = calendar.get(Calendar.MONTH);
+                        int year = calendar.get(Calendar.YEAR);
 
-                    datum.setText(String.format("%d-%02d-%d", day, month + 1, year));
-                    JOptionPane.showMessageDialog(null, "Sistem je ucitao dnevni raspored", "Uspesno ucitavanje dnevnog rasporeda", JOptionPane.INFORMATION_MESSAGE);
+                        datum.setText(String.format("%d-%02d-%d", day, month + 1, year));
+                        JOptionPane.showMessageDialog(null, "Sistem je ucitao dnevni raspored", "Uspesno ucitavanje dnevnog rasporeda", JOptionPane.INFORMATION_MESSAGE);
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Sistem je ne moze da ucita dnevni raspored", "Neuspesno ucitavanje dnevnog rasporeda", JOptionPane.ERROR_MESSAGE);
+                    }
                 }
             }
 
@@ -311,14 +363,11 @@ public class IzmeniDnevniRasporedForm extends javax.swing.JDialog {
 
     private void populateDnevniRasporediTable() {
         try {
-            LinkedList<Dnevni_Raspored> dnevniRasporedi = new LinkedList<>();
+            LinkedList<DnevniRaspored> dnevniRasporedi = new LinkedList<>();
             dnevniRasporedi = ControllerC.getInstance().ucitajListuDnevnihRasporeda(dnevniRasporedi);
 
             if (dnevniRasporedi.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Sistem ne moze da nadje dnevne rasporede", "Neuspesno ucitavanje dnevnih rasporeda", JOptionPane.ERROR_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Sistem je nasao dnevne rasporede", "Uspesno ucitavanje dnevnih rasporeda", JOptionPane.INFORMATION_MESSAGE);
-
             }
 
             dnevniRasporedTableModel = new DnevniRasporedTableModel(dnevniRasporedi);

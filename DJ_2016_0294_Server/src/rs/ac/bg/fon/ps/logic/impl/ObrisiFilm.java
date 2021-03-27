@@ -26,7 +26,7 @@ public class ObrisiFilm extends SistemskeOperacije {
     @Override
     protected void operation() throws Exception {
         Film film = (Film) domainObject;
-        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, "film_id=" + film.getFilm_id(), "");
+        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, "", "film_id=" + film.getFilm_id(), "");
         for (IDomain projekcija : projekcije) {
             database.remove(projekcija);
 //            IZBRISI I P_DR za ove projekcije===================================================================================================

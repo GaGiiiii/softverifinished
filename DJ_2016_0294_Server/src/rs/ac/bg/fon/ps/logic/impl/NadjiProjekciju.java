@@ -23,19 +23,11 @@ public class NadjiProjekciju extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> projekcije = new LinkedList<>();
-        UcitajListuProjekcija ulp = new UcitajListuProjekcija(projekcije);
-        ulp.execute();
-        projekcije = ulp.getList();
-
-        for (IDomain projekcija : projekcije) {
-            Projekcija projekcijica = (Projekcija) projekcija;
-
-            if (domainObject.getId().equals(projekcijica.getId())) {
-                domainObject = projekcijica;
-
-                return;
-            }
+        String join = "film f ON projekcija.film_id = f.film_id JOIN sala s ON projekcija.sala_id = s.sala_id";
+        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class,
+                join, "projekcija_id = " + domainObject.getId(), "");
+        if (projekcije.isEmpty()) {
+            throw new Exception();
         }
     }
 }

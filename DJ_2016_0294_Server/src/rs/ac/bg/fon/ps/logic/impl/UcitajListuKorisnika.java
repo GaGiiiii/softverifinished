@@ -23,7 +23,7 @@ public class UcitajListuKorisnika extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> korisnici = database.getAll(Korisnik.class, "", "");
+        LinkedList<IDomain> korisnici = database.getAll(Korisnik.class, "", "", "");
         list = korisnici;
     }
 

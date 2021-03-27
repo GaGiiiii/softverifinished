@@ -23,7 +23,7 @@ public class UcitajListuFilmova extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> filmovi = database.getAll(Film.class, "", "");
+        LinkedList<IDomain> filmovi = database.getAll(Film.class, "", "", "");
         list = filmovi;
         System.out.println(list);
     }

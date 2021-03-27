@@ -6,7 +6,7 @@
 package rs.ac.bg.fon.ps.logic.impl;
 
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.IDomain;
 import rs.ac.bg.fon.ps.domain.P_DR;
 import rs.ac.bg.fon.ps.domain.Projekcija;
@@ -36,8 +36,8 @@ public class IzmeniDnevniRaspored extends SistemskeOperacije {
         dnevniRasporedi = so.getList();
 
         for (IDomain domainObject : dnevniRasporedi) {
-            Dnevni_Raspored drFromDB = (Dnevni_Raspored) domainObject;
-            Dnevni_Raspored drToInsert = (Dnevni_Raspored) this.domainObject;
+            DnevniRaspored drFromDB = (DnevniRaspored) domainObject;
+            DnevniRaspored drToInsert = (DnevniRaspored) this.domainObject;
 
             if (drToInsert.equals(drFromDB)) {
                 throw new Exception("Postoji dnevni raspored za zadati datum.");
@@ -59,7 +59,7 @@ public class IzmeniDnevniRaspored extends SistemskeOperacije {
         }
 
         for (Projekcija projekcija : projekcije) {
-            P_DR p_dr = new P_DR(Long.MIN_VALUE, projekcija, (Dnevni_Raspored) domainObject);
+            P_DR p_dr = new P_DR(Long.MIN_VALUE, projekcija, (DnevniRaspored) domainObject);
             database.insert(p_dr);
         }
 

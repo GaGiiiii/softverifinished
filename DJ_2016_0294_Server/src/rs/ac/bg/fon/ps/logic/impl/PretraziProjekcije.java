@@ -25,29 +25,11 @@ public class PretraziProjekcije extends SistemskeOperacije {
     }
 
     @Override
-    protected void operation() throws Exception {;
-        LinkedList<IDomain> projekcije = new LinkedList<>();
-        SistemskeOperacije so = new UcitajListuProjekcija(projekcije);
-        so.execute();
-        projekcije = so.getList();
-
-        LinkedList<IDomain> projekcijeGood = new LinkedList<>();
-
-        System.out.println(projekcije);
-
-        for (IDomain projekcija : projekcije) {
-            Projekcija projekcijica = (Projekcija) projekcija;
-
-            System.out.println(projekcijica.getFilm());
-            System.out.println(projekcijica.getSala());
-
-            if (projekcijica.getFilm().getNaziv().toLowerCase().contains(kriterijum.toLowerCase())
-                    || projekcijica.getSala().getNaziv().toLowerCase().contains(kriterijum.toLowerCase())) {
-                projekcijeGood.add(projekcijica);
-            }
-        }
-
-        list = projekcijeGood;
+    protected void operation() throws Exception {
+        String join = "film f ON projekcija.film_id = f.film_id JOIN sala s ON projekcija.sala_id = s.sala_id";
+        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class,
+                join, "f.naziv LIKE '%" + kriterijum + "%' OR s.naziv LIKE '%" + kriterijum + "%'", "");
+        list = projekcije;
     }
 
 }

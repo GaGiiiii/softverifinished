@@ -7,7 +7,7 @@ package rs.ac.bg.fon.ps.helpClasses;
 
 import java.io.Serializable;
 import java.util.LinkedList;
-import rs.ac.bg.fon.ps.domain.Dnevni_Raspored;
+import rs.ac.bg.fon.ps.domain.DnevniRaspored;
 import rs.ac.bg.fon.ps.domain.Projekcija;
 
 /**
@@ -16,10 +16,10 @@ import rs.ac.bg.fon.ps.domain.Projekcija;
  */
 public class KreirajDnevniRasporedHelp implements Serializable {
 
-    private Dnevni_Raspored dnevni_Raspored;
+    private DnevniRaspored dnevni_Raspored;
     private LinkedList<Projekcija> projekcije;
 
-    public KreirajDnevniRasporedHelp(Dnevni_Raspored dnevni_Raspored, LinkedList<Projekcija> projekcije) {
+    public KreirajDnevniRasporedHelp(DnevniRaspored dnevni_Raspored, LinkedList<Projekcija> projekcije) {
         this.dnevni_Raspored = dnevni_Raspored;
         this.projekcije = projekcije;
     }
@@ -32,11 +32,11 @@ public class KreirajDnevniRasporedHelp implements Serializable {
         this.projekcije = projekcije;
     }
 
-    public Dnevni_Raspored getDnevni_Raspored() {
+    public DnevniRaspored getDnevni_Raspored() {
         return dnevni_Raspored;
     }
 
-    public void setDnevni_Raspored(Dnevni_Raspored dnevni_Raspored) {
+    public void setDnevni_Raspored(DnevniRaspored dnevni_Raspored) {
         this.dnevni_Raspored = dnevni_Raspored;
     }
 
