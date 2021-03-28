@@ -23,7 +23,8 @@ public class UcitajListuProjekcija extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, "film f ON projekcija.film_id = f.film_id JOIN sala s ON projekcija.sala_id = s.sala_id", "", "");
+        String join = "film f ON projekcija.film_id = f.film_id JOIN sala s ON projekcija.sala_id = s.sala_id";
+        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, join, "", "");
         list = projekcije;
     }
 }
