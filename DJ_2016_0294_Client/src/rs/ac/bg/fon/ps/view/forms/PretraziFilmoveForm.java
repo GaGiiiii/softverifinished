@@ -323,6 +323,7 @@ public class PretraziFilmoveForm extends javax.swing.JDialog {
                     movieInfoPanel.setVisible(false);
                 } else {
                     JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise film", "Neuspesno brisanje filma", JOptionPane.ERROR_MESSAGE);
+                    res.getException().printStackTrace();
                 }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Sistem ne moze da obrise film", "Greska prilikom brisanja filma", JOptionPane.ERROR_MESSAGE);

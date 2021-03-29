@@ -27,17 +27,14 @@ public class IzmeniProjekciju extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> projekcije = null;
-        SistemskeOperacije so = new UcitajListuProjekcija(projekcije);
-        so.execute();
-        projekcije = so.getList();
+        String join = "film f ON projekcija.film_id = f.film_id JOIN sala s ON projekcija.sala_id = s.sala_id";
+        LinkedList<IDomain> projekcije = database.getAll(Projekcija.class, join, "", "");
 
         for (IDomain domainObject : projekcije) {
             Projekcija projekcijaFromDB = (Projekcija) domainObject;
             Projekcija projekcijaToEdit = (Projekcija) this.domainObject;
 
             System.out.println(projekcijaToEdit.equals(projekcijaFromDB));
-//            System.out.println(projekcijaToEdit.getId().equals(projekcijaFromDB.getId()));
 
             if (projekcijaToEdit.equals(projekcijaFromDB)) {
                 throw new Exception("Postoji projekcija u zadatom terminu.");

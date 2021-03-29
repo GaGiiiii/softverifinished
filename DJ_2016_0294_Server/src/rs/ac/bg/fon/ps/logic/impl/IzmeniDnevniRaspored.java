@@ -30,10 +30,7 @@ public class IzmeniDnevniRaspored extends SistemskeOperacije {
 
     @Override
     protected void operation() throws Exception {
-        LinkedList<IDomain> dnevniRasporedi = null;
-        SistemskeOperacije so = new UcitajListuDnevnihRasporeda(dnevniRasporedi);
-        so.execute();
-        dnevniRasporedi = so.getList();
+        LinkedList<IDomain> dnevniRasporedi = database.getAll(DnevniRaspored.class, "", "", "datum ASC");
 
         for (IDomain domainObject : dnevniRasporedi) {
             DnevniRaspored drFromDB = (DnevniRaspored) domainObject;
@@ -46,10 +43,8 @@ public class IzmeniDnevniRaspored extends SistemskeOperacije {
 
         domainObject = database.update(domainObject);
 
-        LinkedList<IDomain> pdrsDB = null;
-        SistemskeOperacije so2 = new UcitajListuPDR(pdrsDB);
-        so2.execute();
-        pdrsDB = so2.getList();
+        String join = "projekcija p ON pdr.projekcija_id = p.projekcija_id JOIN dnevni_raspored dr ON dr.dnevni_raspored_id = pdr.dnevni_raspored_id JOIN film f ON p.film_id = f.film_id JOIN sala s ON p.sala_id = s.sala_id";
+        LinkedList<IDomain> pdrsDB = database.getAll(P_DR.class, join, "", "");
 
         for (IDomain pdr : pdrsDB) {
             P_DR pdr2 = (P_DR) pdr;

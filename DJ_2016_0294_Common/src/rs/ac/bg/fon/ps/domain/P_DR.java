@@ -93,11 +93,14 @@ public class P_DR implements IDomain, Serializable {
         while (rs.next()) {
             Long id = rs.getLong("p_dr_id");
 
-            Projekcija projekcija = new Projekcija();
-            projekcija.setProjekcija_id(rs.getLong("projekcija_id"));
+            Film film = new Film(rs.getLong("film_id"), rs.getString("f.naziv"), rs.getString("f.zanr"),
+                    rs.getInt("f.trajanje"), rs.getDouble("f.cena_karte"), rs.getString("f.reziser"), rs.getString("f.glumci"), new java.util.Date(rs.getDate("f.datum_izlaska").getTime()), rs.getString("f.opis"));
+            Sala sala = new Sala(rs.getLong("sala_id"), rs.getString("s.naziv"), rs.getInt("s.broj_mesta"),
+                    rs.getBoolean("s.vip_mesta"), rs.getBoolean("s.klima"), rs.getBoolean("s.has3D"));
 
-            DnevniRaspored dnevniRaspored = new DnevniRaspored();
-            dnevniRaspored.setDnevni_raspored_id(rs.getLong("dnevni_raspored_id"));
+            Projekcija projekcija = new Projekcija(rs.getLong("p.projekcija_id"), new java.util.Date(rs.getTimestamp("vreme").getTime()), film, sala);
+
+            DnevniRaspored dnevniRaspored = new DnevniRaspored(rs.getLong("dr.dnevni_raspored_id"), new java.util.Date(rs.getDate("dr.datum").getTime()));
 
             P_DR pdr = new P_DR(id, projekcija, dnevniRaspored);
             list.add(pdr);
